@@ -1,16 +1,13 @@
 const musicas = require("../models/musicas.json")
 
-// map percorre uma lista e retorna ela de acordo com
-// a regra que vc colocar
-// o map já mapeia e ja retorna, mais pratico do que for
- // map percorra a lista. Para cada musica(item) faça algo
  const novaListaMusicas = musicas.map(musica => {
     const novaMusica = {
-        id: musica.id, //acessando a propriedade
+        id: musica.id, 
         nome: musica.name,
         amostra: musica.preview_url,
         nome_album: musica.album.name,
         imagem: musica.album.url,
+        duracao: musica.duration_ms,
         artista: musica.artists.name   
     }
     
@@ -24,6 +21,7 @@ const getMusicas = (request,response) => {
 
 }
 
+// ----------- FILTRO POR ID
 const getMusicasById = (request, response) => {
     const id = request.params.id
     const musicaFiltrada = novaListaMusicas.find(musica => musica.id == id)
@@ -124,13 +122,6 @@ const getAlbuns = (request, response) => {
 const getAlbumPorNome = (request, response) => {
     const nome = request.params.nome
 
-        // listarAlbuns.find(album => {
-
-        //     const minusculas = album.nome.toLowerCase()
-        //     const separarPorEspaco = minusculas.split(' ')
-        //     const juntarPorHifen = separarPorEspaco.join('-')
-        // })
-
     const musicasAlbum = listaMusicas.filter(musica => {
         return musica.nome_album.toLowerCase().split(' ').join('-') === nome
     })    
@@ -140,7 +131,7 @@ const getAlbumPorNome = (request, response) => {
     })
 
     const novoAlbum = {
-        // album é a const album ali de cima
+       
         id: album.id,
         nome: album.nome,
         data_lancamento: album.data_lancamento,
